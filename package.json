@@ -1,0 +1,36 @@
+{
+  "name": "novel-spider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gwl002/novel-spider.git"
+  },
+  "keywords": [
+    "novel",
+    "spider"
+  ],
+  "author": "gwl002",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gwl002/novel-spider/issues"
+  },
+  "homepage": "https://github.com/gwl002/novel-spider#readme",
+  "dependencies": {
+    "bull": "^3.10.0",
+    "cheerio": "^1.0.0-rc.2",
+    "iconv-lite": "^0.4.24",
+    "moment": "^2.24.0",
+    "peer-upnp": "^0.0.6",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  }
+}
