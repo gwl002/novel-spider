@@ -1,6 +1,16 @@
 import Queue from "bull";
 import Redis from "ioredis";
 
+const mongoose = require("mongoose");
+
+function connect() {
+  mongoose.connection
+    .on('error', console.log)
+    .on('disconnected', connect)
+    .once('open', listen);
+  return mongoose.connect(config.db, { keepAlive: 1, useNewUrlParser: true });
+}
+
 const redisConfig = {
 	  port:6379,
   	host:"149.28.149.49",
@@ -41,3 +51,15 @@ queue.add({
 	type:"xxxxx",
 	payload:"yyyyy"
 })
+
+
+//chapter job
+```
+  {
+    type:"book",
+    url:"xxxx"
+  }
+```
+
+
+//book job

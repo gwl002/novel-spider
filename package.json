@@ -25,6 +25,7 @@
     "cheerio": "^1.0.0-rc.2",
     "iconv-lite": "^0.4.24",
     "moment": "^2.24.0",
+    "mongoose": "^5.6.11",
     "peer-upnp": "^0.0.6",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
