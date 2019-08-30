@@ -63,3 +63,9 @@ queue.add({
 
 
 //book job
+```
+{
+  type:"chapter",
+  url:"yyyy"
+}
+```

@@ -2,6 +2,7 @@ module.exports = function(job,done){
   // Do some heavy work
   let data = job.data;
   let type. = data.type;
+  let spider = data.spider;
   switch(type){
   	case "book":
   		crawelBook();
@@ -12,3 +13,5 @@ module.exports = function(job,done){
   }
   return Promise.resolve(result);
 }
+
+
