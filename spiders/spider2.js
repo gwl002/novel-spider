@@ -11,7 +11,8 @@ var baseUrl = "http://www.bqugw.com/"
 
 
 async function getChapters(bookID){
-	const bookUrl = baseUrl + bookID;
+	const bookUrl = baseUrl + bookID + "/";
+	console.log(bookUrl);
 	try{
 		let data = await rp({
 			uri:bookUrl,
@@ -22,6 +23,7 @@ async function getChapters(bookID){
 		let book = {};
 		book.imgSrc = baseUrl + $("#fmimg img").attr("src");
 		book.title = $("#info h1").text();
+		console.log(book.title,"---------");
 		book.author = $("#info p").first().text().split("：")[1];
 		book.lastUpdated = $("#info p").last().prev().text().split("：")[1];
 		let chapters = $("#list dl dd");
@@ -31,6 +33,7 @@ async function getChapters(bookID){
 				link: baseUrl+ $(item).find("a").attr("href")
 			}
 		})
+		book.url = bookUrl;
 		book.chapters = Array.prototype.slice.call(chapters,9);
 		return book;
 	}catch(err){

@@ -1,25 +1,11 @@
-import Queue from "bull";
-import Redis from "ioredis";
+const Queue = require("bull");
+const  Redis = require("ioredis");
 
-const mongoose = require("mongoose");
+const config = require("./config");
 
-function connect() {
-  mongoose.connection
-    .on('error', console.log)
-    .on('disconnected', connect)
-    .once('open', listen);
-  return mongoose.connect(config.db, { keepAlive: 1, useNewUrlParser: true });
-}
 
-const redisConfig = {
-	  port:6379,
-  	host:"149.28.149.49",
-  	password:"gwl002.tk",
-  	db:0
-}
-
-const client = new Redis(redisConfig);
-const subscriber = new Redis(redisConfig);
+const client = new Redis(config.redis);
+const subscriber = new Redis(config.redis);
 
 const opts = {
   createClient: function (type) {
@@ -29,43 +15,13 @@ const opts = {
       case 'subscriber':
         return subscriber;
       default:
-        return new Redis(redisConfig);
+        return new Redis(config.redis);
     }
   }
 }
 
 
-
-const queue = new Queue("test",opts)
-
-
-queue.process(function(job,done){
-  setTimeout(function(){
-    console.log(job.data);
-    done();
-  },50000)
-})
+const queue = new Queue("test",opts);
 
 
-queue.add({
-	type:"xxxxx",
-	payload:"yyyyy"
-})
-
-
-//chapter job
-```
-  {
-    type:"book",
-    url:"xxxx"
-  }
-```
-
-
-//book job
-```
-{
-  type:"chapter",
-  url:"yyyy"
-}
-```
+module.exports = queue;
