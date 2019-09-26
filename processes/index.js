@@ -10,8 +10,9 @@ module.exports = async function(job,done){
   let type = data.type;
   switch(type){
   	case "book":
+        let bookId = data.bookId
         try{
-            let book = await getChapters("12_12725");
+            let book = await getChapters(bookId);
             let doc = await bookModel.findOne({url:book.url}).exec();
             if(!doc){
               doc = new bookModel();
@@ -23,7 +24,7 @@ module.exports = async function(job,done){
             doc.updatedAt = book.lastUpdated;
             await doc.save();
 
-            book.chapters.forEach((item,index)=>{
+            book.chapters.reverse().forEach((item,index)=>{
               console.log(`${item.link} put into waiting queue...`);
               createChapterJob(item.link,index,doc._id);
             })
@@ -34,7 +35,7 @@ module.exports = async function(job,done){
         }
   		return;
   	case "chapter":
-        console.log(`${data.url} start crawel...`);
+        console.log(`${data.url} start crawl...`);
         try{
             let chapter = await getChapter(data.url);
             let doc = await chapterModel.findOne({url:data.url});
@@ -47,6 +48,7 @@ module.exports = async function(job,done){
             doc.content = chapter.content;
             doc.book = data.book;
             await doc.save();
+            console.log(`${data.url} end crawl...`)
             done();
         }catch(err){
             console.log("chapter job error:",err);

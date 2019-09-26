@@ -18,6 +18,9 @@ var path = require("path");
 var url = "http://www.bqugw.com/119_119563/"
 var baseUrl = "http://www.bqugw.com/"
 
+//寒门崛起
+var url = "http://www.bquwu.com/79_79416/"
+var baseUrl = "http://www.bqugw.com/"
 
 
 async function getChapters(bookUrl){

@@ -24,10 +24,10 @@ connect();
 queue.process(3,processes);
 
 
-// queue.add({
-//   type: "book",
-//   bookId: "12_12725"
-// })
+queue.add({
+  type: "book",
+  bookId: "79_79416"
+})
 
 //chapter job
 // ```

@@ -6,13 +6,12 @@ var path = require("path");
 
 //医统江山
 var url = "http://www.bqugw.com/119_119563/"
-var baseUrl = "http://www.bqugw.com/"
+var baseUrl = "http://www.bqugw.com"
 
 
 
 async function getChapters(bookID){
-	const bookUrl = baseUrl + bookID + "/";
-	console.log(bookUrl);
+	const bookUrl = baseUrl + "/" + bookID + "/";
 	try{
 		let data = await rp({
 			uri:bookUrl,
@@ -23,7 +22,6 @@ async function getChapters(bookID){
 		let book = {};
 		book.imgSrc = baseUrl + $("#fmimg img").attr("src");
 		book.title = $("#info h1").text();
-		console.log(book.title,"---------");
 		book.author = $("#info p").first().text().split("：")[1];
 		book.lastUpdated = $("#info p").last().prev().text().split("：")[1];
 		let chapters = $("#list dl dd");
@@ -37,7 +35,8 @@ async function getChapters(bookID){
 		book.chapters = Array.prototype.slice.call(chapters,9);
 		return book;
 	}catch(err){
-		console.log(err)
+        console.log(`${bookUrl} book crawl failed`,err)
+        throw err;
 	}
 }
 
@@ -56,7 +55,8 @@ async function getChapter(chapterUrl){
 		chapter.content = $("#content").text();
 		return chapter;
 	}catch(err){
-		console.log("getChapters Error",err)
+        console.log(`${chapterUrl} chapter crawl failed`,err)
+        throw err;
 	}
 	
 }
