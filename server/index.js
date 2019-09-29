@@ -1,57 +1,80 @@
-const Bcrypt = require('bcrypt');
 const Hapi = require('@hapi/hapi');
+const Inert = require("@hapi/inert");
+const HapiReactViews = require('hapi-react-views');
+const Vision = require('@hapi/vision');
 
-const users = {
-    johnxn: {
-        username: 'johnx',
-        password: '$2a$10$iqJSHD.BGr0E2IxQwYgJmeP3NvhPrXAeLSaGCj6IR/XU5QtjVu5Tm',   // 'secret'
-        name: 'John Doe 00',
-        id: '2133d32a'
-    }
-};
+const Path = require('path');
 
-const validate = async (request, username, password, h) => {
+const Moment = require('moment');
+const Bcrypt = require('bcrypt');
 
-    if (username === 'help') {
-        return { response: h.redirect('https://hapijs.com/help') };     // custom response
-    }
-    console.log(username);
-    const user = users[username];
-    console.log(user);
-    if (!user) {
-        return { credentials: null, isValid: false };
-    }
 
-    const isValid = await Bcrypt.compare(password, user.password);
-    const credentials = { id: user.id, name: user.name };
-    return { isValid, credentials };
-};
+
+require('@babel/register')({
+    presets: ['@babel/preset-react', '@babel/preset-env']
+});
 
 const main = async () => {
 
-    const server = Hapi.server({ port: 4000 , host : "localhost"});
+    const server = Hapi.server({ 
+        port: 4000 , 
+        host : "localhost",
+        routes: {
+            files: {
+                relativeTo: Path.join(__dirname, 'public')
+            }
+        }
+    });
 
-    await server.register(require('@hapi/basic'));
+    await server.register([Inert,Vision]);
 
-    server.auth.strategy('simple', 'basic', { validate });
-    server.auth.default('simple');
-
+    //静态文件处理
     server.route({
         method: 'GET',
-        path: '/',
-        handler: function (request, h) {
+        path: '/public/{param*}',
+        handler: {
+            directory: {
+                path: '.',
+                redirectToSlash: true
+                // listing: true
+            }
+        }
+    });
 
-            return 'welcome';
+    //view处理
+    server.views({
+        engines: {
+            jsx: HapiReactViews
+        },
+        compileOptions: {}, // optional
+        relativeTo: __dirname,
+        path: 'views',
+        compileOptions: {
+            layoutPath: Path.join(__dirname, 'views'),
+            layout: 'layout'
         }
     });
 
     server.route({
         method: 'GET',
-        path: '/auth',
+        path: '/',
         handler: function (request, h) {
-
-            return 'auth';
+            return h.view("home")
         }
+    });
+
+    server.route({
+        method: 'GET',
+        path: "/about",
+        handler: function (request, h) {
+            return h.view("about")
+        }
+    })
+
+    //logger
+    server.events.on('response', function (request) {
+        // you can use request.log or server.log it's depends
+        console.log(Moment().format("YYYY-MM-DD HH:mm:ss") + " " + request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.path + ' --> ' + request.response.statusCode);
     });
 
     await server.start();
@@ -62,7 +85,6 @@ const main = async () => {
 main()
 .then((server) => console.log(`Server listening on ${server.info.uri}`))
 .catch((err) => {
-
     console.error(err);
     process.exit(1);
 });

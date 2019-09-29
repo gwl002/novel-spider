@@ -4,13 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "./node_modules/nodemon/bin/nodemon.js index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/basic": "^5.1.1",
     "@hapi/hapi": "^18.4.0",
-    "bcrypt": "^3.0.6"
+    "@hapi/inert": "^5.2.2",
+    "@hapi/vision": "^5.5.4",
+    "bcrypt": "^3.0.6",
+    "hapi-react-views": "^10.1.1",
+    "moment": "^2.24.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.6.2",
+    "nodemon": "^1.19.2"
   }
 }
