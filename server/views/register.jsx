@@ -17,6 +17,7 @@ class RegisterView extends React.Component {
             	<div>
             		<input type="submit" defaultValue="register" />
             	</div>
+                <div style={{color:"red",fontSize:12}}>{this.props.message}</div>
             </form>
         );
     }

@@ -14,6 +14,7 @@
     "@hapi/inert": "^5.2.2",
     "@hapi/vision": "^5.5.4",
     "bcrypt": "^3.0.6",
+    "catbox-mongodb": "^4.2.1",
     "hapi-react-views": "^10.1.1",
     "moment": "^2.24.0",
     "mongoose": "^5.7.1",

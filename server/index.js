@@ -39,11 +39,22 @@ const main = async () => {
             files: {
                 relativeTo: Path.join(__dirname, 'public')
             }
-        }
+        },
+        cache : [{
+            name: 'sessionCache',
+            provider: {
+              constructor: require('catbox-mongodb'),
+              options: {
+                uri       : 'mongodb://149.28.149.49:27017', // Defaults to 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
+                partition : 'session-cache'
+              }
+            }
+        }]
     });
 
     await server.register([Inert,Vision,HapiSessionAuth]);
-
+    const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 60 * 1000, cache: "sessionCache"});
+    server.app.cache = cache;
 
     server.auth.strategy('session', 'cookie', {
         cookie: {
@@ -55,11 +66,16 @@ const main = async () => {
         },
         redirectTo: '/login',
         validateFunc: async (request, session) => {
-            const user = await UserModel.findOne({_id:session.id}).exec();
-            if(user){
-                return { valid: true, credentials: user };
+            let account = await cache.get(session.id);
+            if(account){
+                return {
+                    valid: true,
+                    credentials: account
+                }
             }else{
-                return { valid: false}
+                return {
+                    valid: false
+                }
             }
         }
     });
@@ -125,19 +141,26 @@ const main = async () => {
         path: "/login",
         handler: async function (request, h) {
             const { email, password } = request.payload;
-            if(!email){
-                return h.view("login")
+            let message = "";
+            if(!email || !password){
+                message = "email or password is missing!";
+                return h.view("login",{message})
             }
-            if(!password){
-                return h.view("login")
-            }
-            const user = await UserModel.findOne({email:email,password:password}).exec();
+            const user = await UserModel.findOne({email:email}).exec();
             if(user){
-                request.cookieAuth.set({id:user._id})
-                return h.redirect("/")
-            }else{
-                return h.view("login")
+                const isValid = await Bcrypt.compare(password,user.password);
+                if(isValid){
+                    const uuid = user._id.toString();
+                    await request.server.app.cache.set(uuid,{email:email,password:""},0)
+                    request.cookieAuth.set({id:uuid});
+                    return h.redirect("/");
+                }
+                message = "password not match!"
+                return h.view("login",{message})
             }
+            message = "email not registered!"
+            return h.view("login",{message})
+            
         },
         options: {
             auth: {
@@ -161,25 +184,27 @@ const main = async () => {
         method: 'POST',
         path: "/register",
         handler: async function (request, h) {
-            const { email, password } = request.payload;
-            if(!email){
-                return h.view("register");
-            }
-            if(!password){
-                return h.view("register");
+            let { email, password } = request.payload;
+            let message = "";
+            if(!email || !password){
+                message = "email or password is missing!";
+                return h.view("register",{message})
             }
             const user = await UserModel.findOne({email:email}).exec();
-            console.log(user);
-            if(user){
-                return h.view("register");
-            }else{
+            if(!user){
+                const salt = Bcrypt.genSaltSync(10);
+                password = await Bcrypt.hash(password,salt);
                 const user = await UserModel.create({
                     email:email,
                     password:password
-                })
-                request.cookieAuth.set({id:user._id})
-                return h.redirect("/")
+                });
+                const uuid = user._id.toString();
+                await request.server.app.cache.set(uuid,{email:email,password:""},0);
+                request.cookieAuth.set({id:uuid});
+                return h.redirect("/");
             }
+            message = "email have been registered!"
+            return h.view("register",{message});
         },
         options: {
             auth: {
