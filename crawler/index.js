@@ -1,8 +1,9 @@
-const mongoose = require("mongoose");
 
-const config = require("./config");
+const config = require("../config");
 const processes = require("./processes");
 const queue = require("./queue");
+
+const mongoose = require("mongoose");
 
 function listen(data){
   console.log("mongodb connect successfully!");

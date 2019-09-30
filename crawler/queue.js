@@ -1,7 +1,9 @@
 const Queue = require("bull");
 const  Redis = require("ioredis");
 
-const config = require("./config");
+const config = require("../config");
+
+const mongoose = require("mongoose");
 
 
 const client = new Redis(config.redis);

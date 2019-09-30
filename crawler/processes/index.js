@@ -38,7 +38,7 @@ module.exports = async function(job,done){
         console.log(`${data.url} start crawl...`);
         try{
             let chapter = await getChapter(data.url);
-            let doc = await chapterModel.findOne({url:data.url});
+            let doc = await chapterModel.findOne({url:data.url}).exec();
             if(!doc){
                 doc = new chapterModel();
             }
