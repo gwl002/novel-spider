@@ -3,6 +3,7 @@ const Inert = require("@hapi/inert");
 const HapiReactViews = require('hapi-react-views');
 const Vision = require('@hapi/vision');
 const HapiSessionAuth = require('@hapi/cookie');
+const HapiRbac = require('hapi-rbac');
 
 const Path = require('path');
 
@@ -52,7 +53,29 @@ const main = async () => {
         }]
     });
 
-    await server.register([Inert,Vision,HapiSessionAuth]);
+    await server.register([
+        Inert,
+        Vision,
+        HapiSessionAuth,
+        {
+            plugin: HapiRbac,
+            options: {
+                policy: {
+                    // target: { 'credentials:group': 'readers' },
+                    apply: 'deny-overrides', // Combinatory algorithm
+                    rules: [
+                        {
+                          target: { 'credentials:email': 'gong.wenlan@163.com' },
+                          effect: 'deny'
+                        },
+                        {
+                          effect: 'permit'
+                        }
+                    ]
+                }
+            } 
+        }
+    ]);
     const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 60 * 1000, cache: "sessionCache"});
     server.app.cache = cache;
 
@@ -132,7 +155,10 @@ const main = async () => {
             return h.view("login")
         },
         options: {
-            auth: false
+            auth: false,
+            plugins: {
+                rbac: 'none'
+            }
         }
     })
 
@@ -165,6 +191,9 @@ const main = async () => {
         options: {
             auth: {
                 mode: "try"
+            },
+            plugins: {
+                rbac: 'none'
             }
         }
     })
@@ -176,7 +205,10 @@ const main = async () => {
             return h.view("register")
         },
         options: {
-            auth: false
+            auth: false,
+            plugins: {
+                rbac: 'none'
+            }
         }
     })
 
@@ -209,6 +241,9 @@ const main = async () => {
         options: {
             auth: {
                 mode: "try"
+            },
+            plugins: {
+                rbac: 'none'
             }
         }
     })
