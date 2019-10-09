@@ -1,3 +1,5 @@
+//website  http://www.bquwu.com/
+
 var rp = require('request-promise-native');
 var iconv = require('iconv-lite');
 var cheerio = require("cheerio");
@@ -20,7 +22,24 @@ async function getChapters(bookID){
 		let html = iconv.decode(data,"gbk");
 		let $ = cheerio.load(html);
 		let book = {};
-		book.imgSrc = baseUrl + $("#fmimg img").attr("src");
+		book.imgSrc = $("#fmimg img").attr("src");
+		if(book.imgSrc){
+			book.imgSrc = baseUrl + book.imgSrc;
+		}
+		if(!book.imgSrc){
+			let scriptCode = $("#fmimg").html();
+			let matches = scriptCode.match(/src=[\"|\'](.+?)[\"|\']/);
+			let thumbnailUrl;
+			if(matches){
+				thumbnailUrl = baseUrl + matches[1];
+			}
+			try{
+				thumbnailUrl= thumbnailUrl.replace("&amp;","&");
+				book.imgSrc = await getBookThumbnail(thumbnailUrl);
+			}catch(err){
+				console.log(err);
+			}
+		}
 		book.title = $("#info h1").text();
 		book.author = $("#info p").first().text().split("：")[1];
 		book.lastUpdated = $("#info p").last().prev().text().split("：")[1];
@@ -61,12 +80,30 @@ async function getChapter(chapterUrl){
 	
 }
 
+async function getBookThumbnail(url){
+	if(!url){
+		return undefined;
+	}
+	try{
+		let data = await rp({
+			uri: url
+		})
+		let matches = data.match(/src=[\"|\'](.+?)[\"|\']/);
+		let imgSrc = matches[1];
+		return imgSrc;
+	}catch(err){
+		console.log(`get thumbnail failed!`)
+	}
+}
+
 
 module.exports = {
 	getChapters,
 	getChapter
 }
- 
+
+
+// getChapters("119_119563")
 
 
 

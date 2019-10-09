@@ -9,7 +9,8 @@ var baseUrl = "http://www.shizongzui.cc/"
 
 
 
-async function getChapters(bookUrl){
+async function getChapters(bookId){
+	let bookUrl = baseUrl + bookId;
 	try{
 		let data = await rp({
 			uri:bookUrl,
@@ -29,10 +30,13 @@ async function getChapters(bookUrl){
 				link: $(item).attr("href")
 			}
 		})
+		book.url = bookUrl;
 		book.chapters = Array.prototype.slice.call(chapters);
+		console.log(book);
 		return book;
 	}catch(err){
-		console.log(err)
+		console.log(`${bookUrl} book crawl failed`,err)
+        throw err;
 	}
 }
 
@@ -54,41 +58,14 @@ async function getChapter(chapterUrl){
 		chapter.content = content;
 		return chapter;
 	}catch(err){
-		console.log(err)
+		console.log(`${chapterUrl} chapter crawl failed`,err)
+        throw err;
 	}
 }
 
-function writeFile(content,filePath,flag){
-	return new Promise((resolve,reject)=>{
-		fs.writeFile(filePath,content,{flag:flag},(err)=>{
-			if(err){
-				reject(err)
-			}
-			resolve();
-		})
-	})
+module.exports = {
+	getChapters,
+	getChapter
 }
 
-async  function downloadBook(bookUrl){
-	let book = await getChapters(bookUrl);
-	let chapters = book.chapters;
-	let filePath = path.resolve(book.title+".txt");
-	try{
-		if(fs.existsSync(filePath)){
-			fs.unlinkSync(filePath)
-		}
-		for(let i=0;i<chapters.length;i++){
-			let chapter = await getChapter(chapters[i].link);
-			console.log(`正在写入${chapter.title}...`)
-			let content = chapter.content;
-			//格式化 缩进为2space
-			// content = content.replace(/(\n|\r)(\s{5})/g,"$1  ").replace(/\s{4}/,"  ");
-			await writeFile("\n"+chapter.title+"\n",filePath,"a");
-			await writeFile(content,filePath,"a");
-		}
-	}catch(err){
-		console.log(err);
-	}	
-}
-
-downloadBook(url);
+// getChapters("santi");
