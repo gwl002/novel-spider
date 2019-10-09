@@ -15,12 +15,10 @@
     "@hapi/vision": "^5.5.4",
     "bcrypt": "^3.0.6",
     "catbox-mongodb": "^4.2.1",
+    "handlebars": "^4.4.0",
     "hapi-rbac": "^3.0.0",
-    "hapi-react-views": "^10.1.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.7.1",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1"
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

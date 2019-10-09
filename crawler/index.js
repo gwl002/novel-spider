@@ -21,14 +21,21 @@ function connect() {
 
 connect();
 
-
 queue.process(3,processes);
 
+queue.add({
+	type: "book",
+	bookId: "santi",
+	spiderName: "spider1"
+})
 
 queue.add({
   type: "book",
-  bookId: "79_79416"
+  bookId: "79_79416",
+  spiderName:"spider2"
 })
+
+
 
 //chapter job
 // ```

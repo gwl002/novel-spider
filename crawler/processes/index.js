@@ -1,4 +1,4 @@
-const {getChapters,getChapter} = require("../spiders/spider2");
+// const {getChapters,getChapter} = require("../spiders/spider2");
 
 const bookModel = require("../models/book");
 const chapterModel = require("../models/chapter");
@@ -8,9 +8,12 @@ module.exports = async function(job,done){
   // Do some heavy work
   let data = job.data;
   let type = data.type;
+  let spiderName = "";
   switch(type){
   	case "book":
-        let bookId = data.bookId
+        let bookId = data.bookId;
+        spiderName = data.spiderName;
+        let { getChapters } = require("../spiders/"+spiderName);
         try{
             let book = await getChapters(bookId);
             let doc = await bookModel.findOne({url:book.url}).exec();
@@ -26,7 +29,7 @@ module.exports = async function(job,done){
 
             book.chapters.reverse().forEach((item,index)=>{
               console.log(`${item.link} put into waiting queue...`);
-              createChapterJob(item.link,index,doc._id);
+              createChapterJob(item.link,index,doc._id,spiderName);
             })
             done();
         }catch(err){
@@ -36,6 +39,8 @@ module.exports = async function(job,done){
   		return;
   	case "chapter":
         console.log(`${data.url} start crawl...`);
+        spiderName = data.spiderName;
+        let { getChapter } = require("./spiders/"+spiderName);
         try{
             let chapter = await getChapter(data.url);
             let doc = await chapterModel.findOne({url:data.url}).exec();
@@ -61,20 +66,22 @@ module.exports = async function(job,done){
 
 
 
-function createChapterJob(chapterUrl,index,bookId){
+function createChapterJob(chapterUrl,index,bookId,spiderName){
   queue.add({
     type: "chapter",
     url: chapterUrl,
     index: index,
-    book: bookId
+    book: bookId,
+    spiderName
   })
 }
 
 
-function createBookJob(bookId){
+function createBookJob(bookId,spiderName){
   queue.add({
     type: "book",
-    bookId: bookId
+    bookId: bookId,
+    spiderName
   })
 }
 
