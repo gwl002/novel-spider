@@ -18,13 +18,48 @@
 	</main>
 </body>
 <script>
+	//web notification
+	function showNotification(title,options) {
+	  // 先检查浏览器是否支持
+	  let notification;
+	  if (!("Notification" in window)) {
+	    alert("This browser does not support desktop notification");
+	  }
+	  // 检查用户是否同意接受通知
+	  else if (Notification.permission === "granted") {
+	    // If it's okay let's create a notification
+	    notification = new Notification(title,options);
+	    notification.onclick = function(){
+	  		window.open("http://localhost:4000/register","_blank");
+	  	}
+	  }
+
+	  // 否则我们需要向用户获取权限
+	  else if (Notification.permission !== 'denied') {
+	    Notification.requestPermission(function (permission) {
+	      // 如果用户同意，就可以向他们发送通知
+	      if (permission === "granted") {
+	        notification = new Notification(title,options);
+	        notification.onclick = function(){
+	        	let url = encodeURL("/register");
+	        	window.open(url);
+	        }
+	      }
+	    });
+	  }
+	  // 最后，如果执行到这里，说明用户已经拒绝对相关通知进行授权
+	  // 出于尊重，我们不应该再打扰他们了
+	}
+
+	
 	var goEasy = new GoEasy({
         appkey: "BS-2be3e03d374340849a09e6b44308a503"
     });
     goEasy.subscribe({
     	channel: "test",
     	onMessage: function(message){
-    		alert(`Channel: ${message.channel} content: ${message.content}`)
+    		const content = `Channel: ${message.channel} content: ${message.content}`
+    		showNotification("novel updated",{body:content,icon:"/public/images/logo.jpg"});
     	}
     })
 </script>

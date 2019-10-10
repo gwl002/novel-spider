@@ -9,7 +9,8 @@ const BookSchema = new Schema({
   	createdAt: {type: Date,default: Date.now},
   	imgSrc: { type: String, default:'', trim: true, maxlength: 100 },
   	url: { type: String, default:'', trim: true, maxlength: 100 },
-  	updatedAt: { type: String, default:'', trim: true, maxlength: 100 }
+  	updatedAt: { type: String, default:'', trim: true, maxlength: 100 },
+  	brief: { type: String, default:'', trim: true, maxlength: 400 }
 })
 
 

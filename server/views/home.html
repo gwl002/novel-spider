@@ -1,13 +1,25 @@
-<div>
-	<div class="row">
-	    <div class="column">.column</div>
-	    <div class="column">.column</div>
-	    <div class="column">.column</div>
-	    <div class="column">.column</div>
-	    <div class="column">.column</div>
-  </div>
-  <div class="row">
-    <div class="column">.column</div>
-    <div class="column column-50 column-offset-25">.column column-50 column-offset-25</div>
-  </div>
-</div>
+<section class="content">
+	<ul class="book-list clearfix">
+		{{#each items}}
+			<li>
+				{{#if imgSrc}}
+					<a href="{{createBookUrl _id}}">
+						<img src="{{imgSrc}}" alt="">
+					</a>
+				{{else}}
+					<a href="{{createBookUrl _id}}">
+						<img src="/public/images/noBookImg.jpg" alt="">
+					</a>
+				{{/if}}
+				<h3>{{title}}</h3>
+				<h3>{{author}}</h3>
+				<span>{{createdAt}}</span>
+				{{#if brief}}
+					<div class="brief">{{brief}}</div>
+				{{else}}
+					<div class="brief">暂无简介</div>
+				{{/if}}
+			</li>
+		{{/each}}
+	</ul>
+</section>

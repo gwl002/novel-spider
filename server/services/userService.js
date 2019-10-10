@@ -3,7 +3,6 @@ const UserModel = require('../models/user.js');
 
 exports.loginPost = async function(request, h){
 	const { email, password } = request.payload;
-    console.log("xxxxxxxxx",email,password)
     let message = "";
     if(!email || !password){
         message = "email or password is missing!";

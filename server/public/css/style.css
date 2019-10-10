@@ -20,7 +20,7 @@
 }
 
 .wrapper .container{
-	max-width: 80rem;
+	max-width: 95rem;
 }
 
 .navigation-title,.navigation-link{
@@ -50,6 +50,19 @@
 	position: relative;
 }
 
+/*404*/
+.notfound-view{
+	margin-top: 20rem;
+	display: flex;
+	justify-content: center;
+	align-items:center;
+}
+
+.notfound-img{
+	vertical-align: middle
+}
+
+/*login*/
 .login-box{
 	background-color:white;
 	border:0.1rem solid #eaeced;
@@ -78,12 +91,51 @@
 	text-align: center;
 }
 
+.content{
+	padding-top: 5.2rem;
+}
+
+.book-list{
+	list-style: none;
+	margin:0;
+	margin-right:-1rem;
+	background-color: #ececec;
+}
+
+.book-list li{
+	list-style: none;
+	margin:0;
+	float:left;
+	width:calc(25% - 1rem);
+	margin-right: 1rem;
+	background-color: #fff
+}
+
+.book-list li img{
+	height:15rem;
+	object-fit: contain;
+}
+
+.book-list li .brief{
+	display: block;
+    display: -webkit-box;
+	height: 10rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
 @media (max-width: 40.0rem) { 
 	.login-box{
 		border: 0;
 		margin-top:9rem;
 		width:100%;
 		padding:0 8% 3rem;
+	}
+
+	.book-list li{
+		width:calc(50% - 1rem);
 	}
 }
 

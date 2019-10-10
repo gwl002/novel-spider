@@ -26,4 +26,4 @@ async function publishNotification(channel,content){
 publishNotification("test","hello")
 
 
-// module.exports = publishNotification
+module.exports = publishNotification

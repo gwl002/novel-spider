@@ -1,17 +1,16 @@
+const businessService = require("../services/businessService.js");
+
+
 module.exports = [
 	{
 		method: 'GET',
 		path: '/',
-		handler: function (request, h) {
-		    return h.view("home")
-		}
+		handler: businessService.home
 	},
 	{
 		method: 'GET',
-		path: "/about",
-		handler: function (request, h) {
-		    return h.view("about")
-		}
+		path: "/book/{bookId}",
+		handler: businessService.book
 	}
 ] 
 
