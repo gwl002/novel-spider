@@ -1,8 +1,5 @@
 <section class="content">
-	<h2>{{title}}</h2>
+	{{book.title}}
 	{{book.author}}
-	{{#with book}}
-		<div class="title">{{title}}</div>
-		<div class="author">{{author}}</div>
-	{{/with}}
+	{{{createChapterList chapters}}}
 </section>

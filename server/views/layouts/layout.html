@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<!-- milligram.css -->
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css">
 	<link rel="stylesheet" href="/public/css/style.css">
+	<!-- 进度条 -->
+	<script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
+	<!-- socket -->
 	<script src='http://cdn-hangzhou.goeasy.io/goeasy.js'></script>
 	<title>Free novel website</title>
 </head>
@@ -50,7 +55,6 @@
 	  // 最后，如果执行到这里，说明用户已经拒绝对相关通知进行授权
 	  // 出于尊重，我们不应该再打扰他们了
 	}
-
 	
 	var goEasy = new GoEasy({
         appkey: "BS-2be3e03d374340849a09e6b44308a503"

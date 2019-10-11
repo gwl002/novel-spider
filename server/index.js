@@ -72,7 +72,7 @@ const main = async () => {
         }
     ]);
 
-    const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 60 * 1000, cache: "sessionCache"});
+    const cache = server.cache({ segment: 'sessions', expiresIn: 24 * 60 * 1000 * 60, cache: "sessionCache"});
     server.app.cache = cache;
 
     server.auth.strategy('session', 'cookie', {

@@ -11,6 +11,11 @@ module.exports = [
 		method: 'GET',
 		path: "/book/{bookId}",
 		handler: businessService.book
-	}
+	},
+	{
+		method: 'GET',
+		path: "/chapter/{chapterId}",
+		handler: businessService.chapter
+	},
 ] 
 
