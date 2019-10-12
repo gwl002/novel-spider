@@ -66,5 +66,18 @@
     		showNotification("novel updated",{body:content,icon:"/public/images/logo.jpg"});
     	}
     })
+
+    let preScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+   	let curScrollTop;
+    let navbar = document.querySelector(".navigation");
+    window.onscroll = function(){
+    	curScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    	if(curScrollTop < preScrollTop){
+    		navbar.style.top = "0";
+    	}else{
+    		navbar.style.top = "-5.2rem";
+    	}
+    	preScrollTop = curScrollTop;
+    }
 </script>
 </html>

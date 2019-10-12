@@ -12,6 +12,7 @@
 	top: 0;
 	width: 100%;
 	z-index:1;
+	transition: top 0.5s;
 }
 
 .navigation .container{
