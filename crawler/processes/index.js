@@ -40,7 +40,7 @@ module.exports = async function(job,done){
   	case "chapter":
         console.log(`${data.url} start crawl...`);
         spiderName = data.spiderName;
-        let { getChapter } = require("./spiders/"+spiderName);
+        let { getChapter } = require("../spiders/"+spiderName);
         try{
             let chapter = await getChapter(data.url);
             let doc = await chapterModel.findOne({url:data.url}).exec();

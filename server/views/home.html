@@ -11,15 +11,16 @@
 						<img src="/public/images/noBookImg.jpg" alt="">
 					</a>
 				{{/if}}
-				<h3>{{title}}</h3>
-				<h3>{{author}}</h3>
-				<span>{{createdAt}}</span>
+				<div class="title"><span>{{title}}</span></div>
+				<div class="author">作者： <span>{{author}}</span></div>
+				<div class="updatedAt">更新时间： <span>{{formatDate createdAt "YYYY-MM-DD"}}</span></div>
 				{{#if brief}}
-					<div class="brief">{{brief}}</div>
+					<span class="brief">简介：<span>{{brief}}</span></span>
 				{{else}}
-					<div class="brief">暂无简介</div>
+					<span class="brief">暂无简介</span>
 				{{/if}}
 			</li>
 		{{/each}}
 	</ul>
 </section>
+

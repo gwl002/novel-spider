@@ -1,6 +1,5 @@
 const Hapi = require('@hapi/hapi');
 const Inert = require("@hapi/inert");
-const HapiReactViews = require('hapi-react-views');
 const Vision = require('@hapi/vision');
 const HapiSessionAuth = require('@hapi/cookie');
 const HapiRbac = require('hapi-rbac');
@@ -30,7 +29,7 @@ const main = async () => {
 
     const server = Hapi.server({ 
         port: 4000 , 
-        host : "localhost",
+        host : "0.0.0.0",
         routes: {
             files: {
                 relativeTo: Path.join(__dirname, 'public')
