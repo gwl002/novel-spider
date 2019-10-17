@@ -6,6 +6,8 @@ const ChapterModel = require("../models/chapter.js");
 
 exports.home = async function(request, h){
 	const items = await BookModel.find().exec();
+	console.log(request.info.remoteAddress);
+	console.log(request.headers["x-forwarded-for"]);
 	return h.view("home",{
 		items
 	})

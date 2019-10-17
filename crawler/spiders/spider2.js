@@ -4,7 +4,18 @@ var rp = require('request-promise-native');
 var iconv = require('iconv-lite');
 var cheerio = require("cheerio");
 var path = require("path");
+var fs = require("fs");
 
+function writeFile(content,filePath,flag){
+	return new Promise((resolve,reject)=>{
+		fs.writeFile(filePath,content,{flag:flag},(err)=>{
+			if(err){
+				reject(err)
+			}
+			resolve();
+		})
+	})
+}
 
 //医统江山
 var url = "http://www.bqugw.com/119_119563/"
@@ -68,10 +79,14 @@ async function getChapter(chapterUrl){
 			encoding: null
 		})
 		let html = iconv.decode(data,"gbk");
-		let $ = cheerio.load(html);
+		let $ = cheerio.load(html,{decodeEntities: false});
 		let chapter ={};
 		chapter.title = $(".bookname h1").text();
-		chapter.content = $("#content").text();
+		let content = $("#content").text();
+		content = content.trim();
+		content = content.replace(/\n/g,"AABBCC").replace(/\s{4}/g,"\t").replace(/AABBCC/g,"\n");
+		content = "\t" + content;
+		chapter.content = content;
 		return chapter;
 	}catch(err){
         console.log(`${chapterUrl} chapter crawl failed`,err)
@@ -104,6 +119,8 @@ module.exports = {
 
 
 // getChapters("119_119563")
+
+// getChapter("http://www.bqugw.com/79_79416/52092918.html");
 
 
 

@@ -55,9 +55,7 @@ async function getChapter(chapterUrl){
 		let content = $(".bookcontent").html();
 		//格式化内容 去除多余字符 增加换行
 		content = content.replace(/<br><br>/g,"\n\n").replace(/<div.+<\/div>/ig,"");
-		content = "\t" + content;
 		chapter.content = content;
-		console.log("content",content);
 		return chapter;
 	}catch(err){
 		console.log(`${chapterUrl} chapter crawl failed`,err)
