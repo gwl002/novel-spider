@@ -1,26 +1,29 @@
-<section class="content">
-	<ul class="book-list clearfix">
-		{{#each items}}
-			<li>
-				{{#if imgSrc}}
-					<a href="{{createBookUrl _id}}">
-						<img src="{{imgSrc}}" alt="">
-					</a>
-				{{else}}
-					<a href="{{createBookUrl _id}}">
-						<img src="/public/images/noBookImg.jpg" alt="">
-					</a>
-				{{/if}}
-				<div class="title"><span>{{title}}</span></div>
-				<div class="author">作者： <span>{{author}}</span></div>
-				<div class="updatedAt">更新时间： <span>{{formatDate createdAt "YYYY-MM-DD"}}</span></div>
-				{{#if brief}}
-					<span class="brief">简介：<span>{{brief}}</span></span>
-				{{else}}
-					<span class="brief">暂无简介</span>
-				{{/if}}
-			</li>
-		{{/each}}
-	</ul>
-</section>
+<div class="container">
+	<section class="content">
+		<ul class="book-list clearfix">
+			{{#each items}}
+				<li>
+					{{#if imgSrc}}
+						<a href="{{createBookUrl _id}}">
+							<img src="{{imgSrc}}" alt="">
+						</a>
+					{{else}}
+						<a href="{{createBookUrl _id}}">
+							<img src="/public/images/noBookImg.jpg" alt="">
+						</a>
+					{{/if}}
+					<div class="title"><span>{{title}}</span></div>
+					<div class="author">作者： <span>{{author}}</span></div>
+					<div class="updatedAt">更新时间： <span>{{formatDate createdAt "YYYY-MM-DD"}}</span></div>
+					{{#if brief}}
+						<span class="brief">简介：<span>{{brief}}</span></span>
+					{{else}}
+						<span class="brief">暂无简介</span>
+					{{/if}}
+				</li>
+			{{/each}}
+		</ul>
+	</section>
+</div>
+
 

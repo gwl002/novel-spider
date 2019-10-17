@@ -34,7 +34,8 @@ exports.book = async function(request, h){
 
 exports.chapter = async function(request, h){
 	try{
-		const chapter = await ChapterModel.findOne({_id: request.params.chapterId}).exec();
+		const { bookId, index } = request.params;
+		const chapter = await ChapterModel.findOne({book:bookId,index:index}).populate("book").exec();
 		if(chapter){
 			return h.view("chapter",{
 				chapter

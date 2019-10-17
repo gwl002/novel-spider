@@ -1,7 +1,7 @@
-module.exports = function(chapters,options){
+module.exports = function(chapters,book){
 	chapters = chapters.sort((a,b)=> b.index - a.index);
 	let str = chapters.map((chapter,index) => {
-		return `<li><a href="/chapter/${chapter._id}">${chapter.title}</a></li>`
+		return `<li><a href="/book/${book._id}/${chapter.index}">${chapter.title}${book.title}</a></li>`
 	}).join("")
 	return `<ul class="chapter-list clearfix">${str}</ul>`;
 }

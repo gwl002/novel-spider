@@ -1,15 +1,18 @@
-<section class="content book">
-	<h1 class="book-title" align="center">{{book.title}}</h1>
-	<div class="clearfix">
-		<strong>
-			<img src="http://www.shizongzui.cc/hot.gif" alt="" width="23" height="20">
-			<a href="/">更多精彩小说</a>
-		</strong>
-	</div>
-	<div class="site">作者：{{book.author}}</div>
-	<div id="i_adtop"></div>
-	{{{createChapterList chapters}}}
-</section>
+<div class="container">
+	<section class="content book">
+		<h1 class="book-title" align="center">{{book.title}}</h1>
+		<div class="clearfix">
+			<strong>
+				<img src="http://www.shizongzui.cc/hot.gif" alt="" width="23" height="20">
+				<a href="/">更多精彩小说</a>
+			</strong>
+		</div>
+		<div class="site">作者：{{book.author}}</div>
+		<div id="i_adtop"></div>
+		{{{createChapterList chapters book}}}
+	</section>
+</div>
+
 <script>
 	document.title = "{{book.title}}_{{book.author}}_免费小说在线阅读"
 </script>
