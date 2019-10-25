@@ -9,7 +9,8 @@ const ChapterSchema = new Schema({
   	content: { type: String, default:'', trim: false, maxlength: 50000 },
   	url: { type: String, default:'', trim: true, maxlength: 100 },
   	book: { type: Schema.Types.ObjectId, ref: 'Book' },
-  	index: { type: Number, default: 0} 			 	
+  	index: { type: Number, default: 0},
+  	spider: { type: String, default:'', trim: true, maxlength: 100 } 			 	
 })
 
 

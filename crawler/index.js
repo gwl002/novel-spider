@@ -21,7 +21,7 @@ function connect() {
 
 connect();
 
-queue.process(3,processes);
+queue.process(10,processes);
 
 queue.add({
 	type: "book",
@@ -34,6 +34,31 @@ queue.add({
   bookId: "79_79416",
   spiderName:"spider2"
 })
+
+// queue.add({
+//   type: "book",
+//   bookId: "119_119563",
+//   spiderName:"spider2"
+// })
+
+// queue.add({
+//   type: "book",
+//   bookId: "18_18827",
+//   spiderName:"spider2"
+// })
+
+// queue.add({
+//   type: "book",
+//   bookId: "78_78767",
+//   spiderName:"spider2"
+// })
+
+// queue.add({
+//   type: "book",
+//   bookId: "159_159110",
+//   spiderName:"spider2"
+// })
+
 
 
 

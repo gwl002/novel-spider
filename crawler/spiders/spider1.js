@@ -32,7 +32,6 @@ async function getChapters(bookId){
 		})
 		book.url = bookUrl;
 		book.chapters = Array.prototype.slice.call(chapters);
-		console.log(book);
 		return book;
 	}catch(err){
 		console.log(`${bookUrl} book crawl failed`,err)

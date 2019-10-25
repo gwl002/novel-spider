@@ -10,7 +10,10 @@ const BookSchema = new Schema({
   	imgSrc: { type: String, default:'', trim: true, maxlength: 100 },
   	url: { type: String, default:'', trim: true, maxlength: 100 },
   	updatedAt: { type: String, default:'', trim: true, maxlength: 100 },
-  	brief: { type: String, default:'', trim: true, maxlength: 400 }
+  	brief: { type: String, default:'', trim: true, maxlength: 400 },
+  	baseUrl: { type: String, default:'', trim: true, maxlength: 100 },
+  	bookId: { type: String, default:'', trim: true, maxlength: 100 },
+  	spider: { type: String, default:'', trim: true, maxlength: 100 }
 })
 
 

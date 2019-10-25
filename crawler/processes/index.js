@@ -27,7 +27,7 @@ module.exports = async function(job,done){
             doc.updatedAt = book.lastUpdated;
             await doc.save();
 
-            book.chapters.reverse().forEach((item,index)=>{
+            book.chapters.forEach((item,index)=>{
               console.log(`${item.link} put into waiting queue...`);
               createChapterJob(item.link,index,doc._id,spiderName);
             })

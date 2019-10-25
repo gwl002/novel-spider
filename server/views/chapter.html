@@ -14,7 +14,19 @@
 	<div class="container chapter-content">
 		<h4 class="chapter-title">{{chapter.title}}</h4>
 		<div class="chapter">{{{chapter.content}}}</div>
+		<div class="pagination">
+			<spa class="pre-page pagination-link">
+				<a href="{{createChapterLink chapter 'pre'}}">上一章</a>
+			</span>
+			<span class="list-page pagination-link">
+				<a href="/book/{{chapter.book._id}}">回到目录</a>
+			</span>
+			<span class="next-page pagination-link">
+				<a href="{{createChapterLink chapter 'next'}}">下一章</a>
+			</span>
+		</div>
 	</div>
+
 </section>
 <script>
 	document.title = "{{chapter.title}}__免费小说在线阅读"
