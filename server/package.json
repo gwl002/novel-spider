@@ -17,7 +17,7 @@
     "catbox-mongodb": "^4.2.1",
     "handlebars": "^4.4.0",
     "hapi-rbac": "^3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.1"
   },
   "devDependencies": {
